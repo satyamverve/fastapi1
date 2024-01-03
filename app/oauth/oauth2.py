@@ -25,7 +25,8 @@ def create_access_token(data: dict):
     
     # logic to set for how much time user have to be logged in
     expire= datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    to_encode.update({"exp": expire})
+    # to_encode.update({"exp": expire})
+    to_encode.update({"exp": expire, "email": to_encode.get("email")}) #use it to use email as username
     
     # convert user_id to string
     to_encode["user_id"] = str(to_encode.get("user_id"))

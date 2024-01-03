@@ -6,22 +6,21 @@ from app.config.database import get_db
 from app.models.user_tables import User
 import utils
 from app.oauth import oauth2
+# from app.auth.auth_schema import UserAuth
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 
 
 router = APIRouter( )
 
 @router.post('/login')
-# def user_login(user_credentials : UserAuth, db : session= Depends(get_db)):
 
-#now making the login by the help of fastapi inbuilt class(in payload it only 
-# takes username and password)
+#now making the login by the help of fastapi inbuilt class(bydefault in payload it takes username and password)
 def user_login(user_credentials : OAuth2PasswordRequestForm= Depends(), 
                db : session= Depends(get_db)):
 
-#so, we can't give email for login purpose while we are using "OAuth2PasswordRequestForm"
-    # user= db.query(User).filter(User.email == user_credentials.email).first()
-    user= db.query(User).filter(User.username == user_credentials.username).first()
+    # user= db.query(User).filter(User.username == user_credentials.username).first()
+
+    user = db.query(User).filter(User.email == user_credentials.username).first() #use this to login with email as username
     if not user:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail="Invalid Credentials")

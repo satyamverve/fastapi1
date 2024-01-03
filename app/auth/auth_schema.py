@@ -13,3 +13,4 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     id : Optional[str] = None
     password: str | None= None
+    email: Optional[EmailStr] = None  #added to use email as username
